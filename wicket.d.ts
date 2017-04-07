@@ -1,26 +1,21 @@
 // Types definitions for Wicket 1.3.2
 // This DOES NOT include Leaflet, Google Maps and ESRI extensions
 
+/**
+ * The Wkt namespace.
+ */
 declare namespace Wkt {
-	
-	/**
-	 * An object with x and y properties
-	 */
-	interface Point{
-		x: number;
-		y: number;
-	}
-
-	type Polygon = Point[];
 
 	/**
-	 * Internal representation of geometric components
+	 * Determines whether or not the passed Object is an Array.
+	 * @param obj The Object in question
 	 */
-	interface InternalGeometry extends Array<Point | Polygon>{}
+	export function isArray(obj: any): boolean;
 
-	interface WktStatic {
-		Wkt: Wkt;
-	}
+	/**
+	 * The default delimiter for separating components of atomic geometry (coordinates)
+	 */
+	export var delimiter: string;
 
 	/**
 	 * An object for reading WKT strings and writing geographic features
@@ -96,6 +91,21 @@ declare namespace Wkt {
 
 		ingest: Ingest;
 	}
+	
+	/**
+	 * An object with x and y properties
+	 */
+	interface Point{
+		x: number;
+		y: number;
+	}
+
+	type Polygon = Point[];
+
+	/**
+	 * Internal representation of geometric components
+	 */
+	interface InternalGeometry extends Array<Point | Polygon>{}
 
 	/**
 	 * This object contains functions as property names that extract WKT strings from the internal representation.
