@@ -29,7 +29,7 @@ declare namespace Wkt {
 		/**
 		 * Holder for atomic geometry objects (internal representation of geometric components)
 		 */
-		components: InternalGeometry[];
+		components: InternalGeometry;
 
 		/**
 		 * The default delimiter for separating components of atomic geometry (coordinates)
@@ -40,6 +40,11 @@ declare namespace Wkt {
 		 * Some regular expressions copied from OpenLayers.Format.WKT.js
 		 */
 		regExes: any;
+
+		/**
+		 * The Well-Known Text name (e.g. 'point') of the geometry
+		 */
+		type: string;
 
 		/**
 		 * True to wrap vertices in MULTIPOINT geometries; If true: MULTIPOINT((30 10),(10 30),(40 40)); If false: MULTIPOINT(30 10,10 30,40 40)
@@ -100,12 +105,23 @@ declare namespace Wkt {
 		y: number;
 	}
 
-	type Polygon = Point[];
+	type Linestring = Point[];
+
+	type Ring = Point[];
+
+	/**
+	 * A polygon composed of multiple rings.
+	 * 
+	 * OGC standard definition requires a polygon to be topologically closed.
+	 * The exterior linear ring of a polygon is defined in a counter clockwise direction.
+	 * Any interior linear rings should be defined in opposite fashion compared to the exterior ring i.e. clockwise.
+	 */
+	type Polygon = Ring[];
 
 	/**
 	 * Internal representation of geometric components
 	 */
-	interface InternalGeometry extends Array<Point | Polygon>{}
+	type InternalGeometry = Point | Point[] | Linestring | Linestring[] | Polygon | Polygon[];
 
 	/**
 	 * This object contains functions as property names that extract WKT strings from the internal representation.
